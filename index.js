@@ -32,6 +32,16 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+    app.post("/jwt", (req, res) => {
+      const user = req.body;
+      console.log(user);
+      const token = jwt.sign(user, process.env.ACCESS_TOKEN, {
+        expiresIn: "10h",
+      });
+
+      console.log(token);
+      res.send({ token });
+    });
 
     app.get("/services/:id", async (req, res) => {
       const id = req.params.id;
